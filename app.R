@@ -132,7 +132,7 @@ ui <- page_navbar(
           tags$p(
             tags$b("Package: "),
             tags$code("ebdt"), " v",
-            packageVersion("ebdt")
+            as.character(packageVersion("ebdt"))
           ),
           tags$p(
             tags$b("Built with: "),
