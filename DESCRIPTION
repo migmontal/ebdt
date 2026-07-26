@@ -24,4 +24,6 @@ Suggests:
     readxl,
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes:
+    migmontal/ebdt
 Config/testthat/edition: 3
