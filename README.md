@@ -70,14 +70,6 @@ ebdt(231,32,27,55)
 
 ---
 
-## Documentation
-
-- **Website**: [https://migmontal.github.io/ebdt](https://migmontal.github.io/ebdt)
-- **Vignettes**: `vignette("ebdt-introduction")`
-- **Issues**: [GitHub Issues](https://github.com/migmontal/ebdt/issues)
-
----
-
 ## Citation
 
 If you use `ebdt` in your research, please cite it as:
