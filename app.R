@@ -59,6 +59,16 @@ ui <- page_navbar(
       .nav-tabs .nav-link:hover {
         border-color: #DC3545 !important;
       }
+       .navbar-nav .nav-link {
+        color: #A8E6B2 !important;
+      }
+
+      .navbar-nav .nav-link.active {
+        color: white !important;
+        background-color: ##0D6EFD !important;
+        border-radius: 0.375rem;
+      }
+
     "))
   ),
 
@@ -140,6 +150,23 @@ ui <- page_navbar(
           numericInput("r1", "False Positive (FP):", value = 5),
           numericInput("s0", "False Negative (FN):", value = 10),
           numericInput("r0", "True Negative (TN):", value = 45),
+
+          numericInput(
+            inputId = "conflev",
+            label = "Confidence level:",
+            value = 0.95,
+            min = 0.50,
+            max = 0.999,
+            step = 0.01
+            ),
+          numericInput(
+            inputId = "digits",
+            label = "Number of decimals:",
+            value = 3,
+            min = 0,
+            max = 10,
+            step = 1
+            ),
 
           tags$div(id = "validation_message", style = "margin-top: 10px;")
         ),
@@ -335,10 +362,10 @@ server <- function(input, output, session) {
 
     txt <- capture.output({
       if (input$target2 == "All") {
-        ebdt(s1 = a, r1 = b, s0 = c, r0 = d, study = is_cross)
+        ebdt(s1 = a, r1 = b, s0 = c, r0 = d, study = is_cross, conflev = input$conflev, digits = input$digits)
       } else {
         func_name <- METRICS_ALL[[input$target2]]
-        do.call(func_name, list(s1 = a, r1 = b, s0 = c, r0 = d))
+        do.call(func_name, list(s1 = a, r1 = b, s0 = c, r0 = d, conflev = input$conflev, digits = input$digits))
       }
     })
 
@@ -392,6 +419,8 @@ server <- function(input, output, session) {
       FP = input$r1,
       FN = input$s0,
       TN = input$r0,
+      ConfLevel = input$conflev,
+      Digits = input$digits,
       Parameters = input$target2,
       stringsAsFactors = FALSE
     )
@@ -449,6 +478,8 @@ server <- function(input, output, session) {
       FP = numeric(),
       FN = numeric(),
       TN = numeric(),
+      ConfLevel = numeric(),
+      Digits = numeric(),
       Parameters = character(),
       stringsAsFactors = FALSE
     ))
@@ -463,10 +494,12 @@ server <- function(input, output, session) {
     content = function(file) {
       res <- resultados_calculados()
       header <- sprintf(
-        "EBDT - Binary Diagnostic Test Evaluation Report\n%s\n\nStudy Type: %s\nParameters: %s\n\n%s\n",
+        "EBDT - Binary Diagnostic Test Evaluation Report\n%s\n\nStudy Type: %s\nParameters: %s\nConfidence level:%s\nDecimals: %d\n\n",
         format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
         input$target1,
         input$target2,
+        input$conflev,
+        input$digits,
         "="
       )
       writeLines(paste0(header, res), file)
@@ -475,4 +508,3 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
