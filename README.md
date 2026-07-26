@@ -2,9 +2,6 @@
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/ebdt)](https://CRAN.R-project.org/package=ebdt)
-[![R-CMD-check](https://github.com/migmontal/ebdt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/migmontal/ebdt/actions/workflows/R-CMD-check.yaml)
-[![ORCID](https://img.shields.io/badge/ORCID-0000--0003--XXXX--XXXX-green)](https://orcid.org/0000-0003-XXXX-XXXX)
 <!-- badges: end -->
 
 ## Overview
@@ -38,24 +35,9 @@ install.packages("ebdt")
 library(ebdt)
 
 # Example: Evaluate a diagnostic test
-actual_disease <- c(rep(1, 50), rep(0, 50))
-test_results <- c(rbinom(50, 1, 0.85), rbinom(50, 1, 0.10))
+ebdt(231,32,27,55)
 
-# Calculate diagnostic performance metrics
-metrics <- calculate_metrics(actual_disease, test_results)
-print(metrics)
-
-# Visualize results
-plot_roc_curve(actual_disease, test_results)
-plot_confusion_matrix(actual_disease, test_results)
 ```
-
-## Main Features
-
-- **Performance Metrics**: Sensitivity, specificity, accuracy, predictive values, likelihood ratios
-- **ROC Curve Analysis**: Generate ROC curves with AUC computation
-- **Confusion Matrix Visualization**: Beautiful confusion matrix plots
-- **Test Comparison**: Compare multiple diagnostic tests side-by-side
 
 ## Documentation
 
@@ -71,12 +53,18 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 If you use `ebdt` in your research, please cite it as:
 
+Montero-Alonso M.A., Luna del Castillo J.D. (2026). ebdt: Evaluation of the quality of binary diagnostic test parameters. R package version 1.0.0.
+
 ```bibtex
-@Manual{ebdt2024,
-  title = {ebdt: Evaluation of Binary Diagnostic Tests},
-  author = {Montalbán, Miguel},
-  year = {2024},
-  note = {R package version 0.1.0},
-  url = {https://github.com/migmontal/ebdt}
+@Manual{ebdt2026,
+  title = {ebdt: Evaluation of the quality of binary diagnostic test parameters},
+  author = {Miguel Angel Montero-Alonso and Juan de Dios Luna del Castillo},
+  year = {2026},
+  note = {R package version 1.0.0},
 }
 ```
+
+## Finding
+
+Plan Propio de Investigación y Transferencia de la Universidad de Granada. 2025. Programa 21. Programa de estimulación a la investigación.
+
