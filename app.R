@@ -28,7 +28,7 @@ METRICS_RETRO <- METRICS_ALL[c(
   "Negative Likelihood Ratio (NLR)", "Youden Index (You)"
 )]
 
-# Tema personalizado moderno (Recomendación 1)
+# Tema personalizado moderno
 custom_theme <- bs_theme(
   version = 5,
   preset = "flatly",
@@ -37,140 +37,79 @@ custom_theme <- bs_theme(
   success = "#198754",
   info = "#0DCAF0",
   warning = "#FFC107",
-  danger = "#DC3545",
-  font_scale = 1.0
+  danger = "#DC3545"
 )
 
 ui <- page_navbar(
   title = "Evaluating Binary Diagnostic Tests - EBDT",
-  id = "navbar",
   theme = custom_theme,
   window_title = "EBDT - Diagnostic Test Evaluation",
   
-  # Página de información (Recomendación 6)
   nav_panel(
     "Info",
     icon = bs_icon("info-circle"),
     
-    layout_column_wrap(
-      width = "100%",
-      
-      card(
-        full_screen = TRUE,
-        card_header(
-          strong(bs_icon("book"), " About EBDT"),
-          class = "bg-primary text-white"
-        ),
-        p(
-          "The ",
-          tags$code("ebdt"),
-          " Shiny app evaluates the quality of a binary diagnostic test under complete verification.
-           It computes point estimates and confidence intervals for sensitivity, specificity, Youden index,
-           positive and negative predictive values, positive and negative likelihood ratios, weighted kappa coefficient,
-           and disease prevalence for both cross-sectional and retrospective study designs using the ",
-          tags$code("ebdt"),
-          " library."
-        )
+    card(
+      full_screen = TRUE,
+      card_header(strong(bs_icon("book"), " About EBDT")),
+      p(
+        "The ",
+        tags$code("ebdt"),
+        " Shiny app evaluates the quality of a binary diagnostic test under complete verification.
+         It computes point estimates and confidence intervals for sensitivity, specificity, Youden index,
+         positive and negative predictive values, positive and negative likelihood ratios, weighted kappa coefficient,
+         and disease prevalence for both cross-sectional and retrospective study designs using the ",
+        tags$code("ebdt"),
+        " library."
       )
     ),
+    
+    br(),
     
     layout_column_wrap(
       width = "100%",
       col_widths = c(6, 6),
       
-      # Tarjeta de autores
       card(
-        card_header(
-          strong(bs_icon("people"), " Authors"),
-          class = "bg-info text-white"
-        ),
-        tags$div(
-          style = "margin: 15px 0;",
-          tags$p(
-            tags$b("Miguel Ángel Montero-Alonso"),
-            tags$a(
-              tags$i("ORCID"),
-              href = "https://orcid.org/0000-0002-1214-9035",
-              target = "_blank",
-              class = "ms-2 badge bg-secondary"
-            )
-          ),
-          tags$p(
-            tags$b("Juan de Dios Luna del Castillo"),
-            tags$a(
-              tags$i("ORCID"),
-              href = "https://orcid.org/0000-0002-1854-4968",
-              target = "_blank",
-              class = "ms-2 badge bg-secondary"
-            )
-          ),
-          tags$p(
-            tags$a(
-              "Department of Statistics and Operational Research",
-              href = "https://estadistica.ugr.es",
-              target = "_blank",
-              class = "d-block"
-            ),
-            tags$a(
-              "University of Granada",
-              href = "https://www.ugr.es/",
-              target = "_blank",
-              class = "d-block"
-            )
-          )
+        card_header(strong(bs_icon("people"), " Authors")),
+        tags$p(tags$b("Miguel Ángel Montero-Alonso"), 
+               tags$a("ORCID", href = "https://orcid.org/0000-0002-1214-9035", target = "_blank")),
+        tags$p(tags$b("Juan de Dios Luna del Castillo"), 
+               tags$a("ORCID", href = "https://orcid.org/0000-0002-1854-4968", target = "_blank")),
+        tags$p(
+          tags$a("Department of Statistics and Operational Research", 
+                 href = "https://estadistica.ugr.es", target = "_blank"),
+          tags$br(),
+          tags$a("University of Granada", 
+                 href = "https://www.ugr.es/", target = "_blank")
         )
       ),
       
-      # Tarjeta de versión
       card(
-        card_header(
-          strong(bs_icon("code-square"), " Technical Info"),
-          class = "bg-success text-white"
-        ),
-        tags$div(
-          style = "margin: 15px 0;",
-          tags$p(
-            tags$b("Package: "),
-            tags$code("ebdt"), " v",
-            as.character(packageVersion("ebdt"))
-          ),
-          tags$p(
-            tags$b("Built with: "),
-            "R, Shiny, bslib"
-          ),
-          tags$p(
-            tags$b("Last updated: "),
-            "2024"
-          )
-        )
+        card_header(strong(bs_icon("code-square"), " Technical Info")),
+        tags$p(tags$b("Built with: "), "R, Shiny, bslib"),
+        tags$p(tags$b("Last updated: "), "2024")
       )
     ),
     
-    # Acordeón de referencias
-    layout_column_wrap(
-      width = "100%",
-      accordion(
-        accordion_panel(
-          title = strong(bs_icon("bookmark"), " Key References"),
-          tags$div(
-            style = "font-size: 0.95em; line-height: 1.6;",
-            tags$ul(
-              tags$li("Agresti, A. (2002). Categorical Data Analysis. John Wiley and Sons, New York."),
-              tags$li("Agresti, A., Coull, B.A. (1998). Approximate is better than 'exact' for interval estimation of binomial proportions. The American Statistician, 52:119–126."),
-              tags$li("Gart, J.J., Nam J. (1988). Approximate interval estimation of the ratio of binomial parameters: a review and corrections for skewness. Biometrics, 44: 323–338."),
-              tags$li("Montero-Alonso, M.Á. (2010). Intervalos de confianza y contrastes de hipótesis para parámetros de tests diagnósticos binarios, Doctoral Thesis."),
-              tags$li("Simel D.L., Samsa, G.P., Matchar, D.B. (1991). Likelihood ratios with confidence: sample size estimation for diagnostic test studies. J. Clin Epidemiology, 44(8): 763-770."),
-              tags$li("Roldán Nofuentes J.A., Luna del Castillo J.D., Montero Alonso, M.A. (2009). Confidence intervals of weighted kappa coefficient of a binary diagnostic test. Communications in Statistics. Simulation and Computation, 38: 1562–1578."),
-              tags$li("Pepe, M. S. (2003). The statistical evaluation of medical tests for classification and prediction. Oxford University Press."),
-              tags$li("Zhou, X.-H., Obuchowski, N. A., McClish, D. K. (2011). Statistical Methods in Diagnostic Medicine (2.ª ed.). John Wiley & Sons.")
-            )
-          )
-        )
+    br(),
+    
+    card(
+      card_header(strong(bs_icon("bookmark"), " Key References")),
+      tags$ul(
+        style = "font-size: 0.95em; line-height: 1.6;",
+        tags$li("Agresti, A. (2002). Categorical Data Analysis. John Wiley and Sons, New York."),
+        tags$li("Agresti, A., Coull, B.A. (1998). Approximate is better than 'exact' for interval estimation of binomial proportions. The American Statistician, 52:119–126."),
+        tags$li("Gart, J.J., Nam J. (1988). Approximate interval estimation of the ratio of binomial parameters: a review and corrections for skewness. Biometrics, 44: 323–338."),
+        tags$li("Montero-Alonso, M.Á. (2010). Intervalos de confianza y contrastes de hipótesis para parámetros de tests diagnósticos binarios, Doctoral Thesis."),
+        tags$li("Simel D.L., Samsa, G.P., Matchar, D.B. (1991). Likelihood ratios with confidence: sample size estimation for diagnostic test studies. J. Clin Epidemiology, 44(8): 763-770."),
+        tags$li("Roldán Nofuentes J.A., Luna del Castillo J.D., Montero Alonso, M.A. (2009). Confidence intervals of weighted kappa coefficient of a binary diagnostic test. Communications in Statistics. Simulation and Computation, 38: 1562–1578."),
+        tags$li("Pepe, M. S. (2003). The statistical evaluation of medical tests for classification and prediction. Oxford University Press."),
+        tags$li("Zhou, X.-H., Obuchowski, N. A., McClish, D. K. (2011). Statistical Methods in Diagnostic Medicine (2.ª ed.). John Wiley & Sons.")
       )
     )
   ),
   
-  # Página de cálculo principal (Recomendación 2, 5, 7)
   nav_panel(
     "Calculate",
     
@@ -179,157 +118,56 @@ ui <- page_navbar(
         title = "Input Parameters",
         open = "desktop",
         
-        # Sección 1: Datos de entrada
         card(
-          card_header(
-            strong(bs_icon("table"), " Contingency Table Data"),
-            class = "bg-primary text-white"
-          ),
+          card_header(strong(bs_icon("table"), " Contingency Table Data")),
           
           fileInput(
             "excel_file",
             "Upload Excel file (.xlsx)",
-            accept = c(".xlsx", ".xls"),
-            class = "form-control"
+            accept = c(".xlsx", ".xls")
           ),
           
-          tags$small(
-            "Or enter data manually:",
-            class = "text-muted d-block mb-3"
-          ),
+          tags$small("Or enter data manually:", class = "d-block mb-3"),
           
-          numericInput(
-            "s1",
-            label = tags$span(
-              "True Positive (TP)",
-              tags$i(
-                class = "bi bi-question-circle-fill",
-                title = "Number of diseased individuals correctly identified by the test"
-              )
-            ),
-            value = 40
-          ),
+          numericInput("s1", "True Positive (TP):", value = 40),
+          numericInput("r1", "False Positive (FP):", value = 5),
+          numericInput("s0", "False Negative (FN):", value = 10),
+          numericInput("r0", "True Negative (TN):", value = 45),
           
-          numericInput(
-            "r1",
-            label = tags$span(
-              "False Positive (FP)",
-              tags$i(
-                class = "bi bi-question-circle-fill",
-                title = "Number of healthy individuals incorrectly identified as diseased"
-              )
-            ),
-            value = 5
-          ),
-          
-          numericInput(
-            "s0",
-            label = tags$span(
-              "False Negative (FN)",
-              tags$i(
-                class = "bi bi-question-circle-fill",
-                title = "Number of diseased individuals missed by the test"
-              )
-            ),
-            value = 10
-          ),
-          
-          numericInput(
-            "r0",
-            label = tags$span(
-              "True Negative (TN)",
-              tags$i(
-                class = "bi bi-question-circle-fill",
-                title = "Number of healthy individuals correctly identified as healthy"
-              )
-            ),
-            value = 45
-          ),
-          
-          # Validación en tiempo real (Recomendación 5)
-          tags$div(
-            id = "validation_message",
-            style = "margin-top: 10px;"
-          )
+          tags$div(id = "validation_message", style = "margin-top: 10px;")
         ),
         
         br(),
         
-        # Sección 2: Opciones de análisis
         card(
-          card_header(
-            strong(bs_icon("gear"), " Analysis Options"),
-            class = "bg-info text-white"
-          ),
+          card_header(strong(bs_icon("gear"), " Analysis Options")),
           
-          selectInput(
-            "target1",
-            label = tags$span(
-              "Study Type",
-              bslib::tooltip(
-                bs_icon("question-circle"),
-                "Select the type of study design used for data collection"
-              )
-            ),
-            choices = c("Cross-sectional", "Retrospective")
-          ),
-          
-          selectInput(
-            "target2",
-            label = tags$span(
-              "Parameters to Calculate",
-              bslib::tooltip(
-                bs_icon("question-circle"),
-                "Choose which metrics to compute. Available metrics depend on study type."
-              )
-            ),
-            choices = c("All", names(METRICS_ALL))
-          )
+          selectInput("target1", "Study Type:", choices = c("Cross-sectional", "Retrospective")),
+          selectInput("target2", "Parameters to Calculate:", choices = c("All", names(METRICS_ALL)))
         ),
         
         br(),
         
-        # Sección 3: Exportar resultados
         card(
-          card_header(
-            strong(bs_icon("download"), " Export Options"),
-            class = "bg-success text-white"
-          ),
+          card_header(strong(bs_icon("download"), " Export Options")),
           
-          checkboxInput(
-            "export_check",
-            "Export results to TXT?",
-            value = FALSE
-          ),
+          checkboxInput("export_check", "Export results to TXT?", value = FALSE),
           
           conditionalPanel(
             condition = "input.export_check == true",
             br(),
-            downloadButton(
-              "downloadData",
-              label = "Download result.txt",
-              class = "btn-success w-100",
-              icon = icon("download")
-            )
+            downloadButton("downloadData", "Download result.txt", class = "btn-success w-100")
           )
         ),
         
         br(),
         
-        # Botón de cálculo
-        actionButton(
-          "run",
-          label = tags$span(bs_icon("calculator"), " Calculate"),
-          class = "btn-primary w-100",
-          size = "lg"
-        )
+        actionButton("run", label = "Calculate", class = "btn-primary w-100", size = "lg")
       ),
       
-      # Panel principal
       navset_card_tab(
         title = "Results",
         
-        # Pestaña 1: Tabla de contingencia
         nav_panel(
           "Contingency Table",
           icon = bs_icon("grid-1x2"),
@@ -337,15 +175,10 @@ ui <- page_navbar(
           card(
             full_screen = TRUE,
             card_header(strong("2x2 Contingency Table")),
-            
-            tags$div(
-              style = "overflow-x: auto;",
-              DTOutput("contingency_table_dt")
-            )
+            DTOutput("contingency_table_dt")
           )
         ),
         
-        # Pestaña 2: Resultados
         nav_panel(
           "Results",
           icon = bs_icon("bar-chart"),
@@ -363,7 +196,6 @@ ui <- page_navbar(
           )
         ),
         
-        # Pestaña 3: Historial (Recomendación 9)
         nav_panel(
           "History",
           icon = bs_icon("clock-history"),
@@ -378,20 +210,10 @@ ui <- page_navbar(
               p("Calculations will appear here. You can compare previous results.")
             ),
             
-            tags$div(
-              style = "overflow-x: auto;",
-              DTOutput("history_table")
-            ),
+            DTOutput("history_table"),
             
-            tags$div(
-              style = "margin-top: 15px;",
-              actionButton(
-                "clear_history",
-                label = "Clear History",
-                class = "btn-warning btn-sm",
-                icon = icon("trash")
-              )
-            )
+            br(),
+            actionButton("clear_history", "Clear History", class = "btn-warning btn-sm")
           )
         )
       )
@@ -401,7 +223,6 @@ ui <- page_navbar(
 
 server <- function(input, output, session) {
   
-  # Almacenar historial de cálculos (Recomendación 9)
   history_data <- reactiveVal(data.frame(
     Timestamp = character(),
     StudyType = character(),
@@ -413,7 +234,6 @@ server <- function(input, output, session) {
     stringsAsFactors = FALSE
   ))
   
-  # Actualizar opciones de parámetros según tipo de estudio
   observeEvent(input$target1, {
     choices <- if (input$target1 == "Retrospective") {
       c("All", names(METRICS_RETRO))
@@ -423,7 +243,6 @@ server <- function(input, output, session) {
     updateSelectInput(session, "target2", choices = choices)
   })
   
-  # Validación en tiempo real (Recomendación 5)
   observe({
     s1 <- input$s1
     r1 <- input$r1
@@ -462,7 +281,6 @@ server <- function(input, output, session) {
     })
   })
   
-  # Helper: read 2x2 table from file (Excel or CSV)
   read_2x2_from_file <- function(path) {
     ext <- tolower(tools::file_ext(path))
     if (ext %in% c("xlsx", "xls")) {
@@ -483,7 +301,6 @@ server <- function(input, output, session) {
     list(s1 = vals[1], r1 = vals[2], s0 = vals[3], r0 = vals[4])
   }
   
-  # Auto-populate from file (Excel or CSV)
   observeEvent(input$excel_file, {
     req(input$excel_file)
     tryCatch({
@@ -498,7 +315,6 @@ server <- function(input, output, session) {
     })
   })
   
-  # Centralized computing
   resultados_calculados <- eventReactive(input$run, {
     a <- input$s1; b <- input$r1; c <- input$s0; d <- input$r0
     is_cross <- (input$target1 == "Cross-sectional")
@@ -519,7 +335,6 @@ server <- function(input, output, session) {
     cat(resultados_calculados())
   })
   
-  # Mostrar tabla de contingencia con DT (Recomendación 3)
   output$contingency_table_dt <- renderDT({
     data <- matrix(
       c(input$s1, input$r1, input$s0, input$r0),
@@ -549,7 +364,6 @@ server <- function(input, output, session) {
       formatStyle(rows = 1, backgroundColor = "#FFF9C4")
   }, server = FALSE)
   
-  # Agregar a historial cuando se calcula (Recomendación 9)
   observeEvent(input$run, {
     current_history <- history_data()
     
@@ -566,7 +380,6 @@ server <- function(input, output, session) {
     
     updated_history <- rbind(new_row, current_history)
     
-    # Mantener solo los últimos 50 registros
     if (nrow(updated_history) > 50) {
       updated_history <- updated_history[1:50, ]
     }
@@ -574,7 +387,6 @@ server <- function(input, output, session) {
     history_data(updated_history)
   })
   
-  # Mostrar historial (Recomendación 9)
   output$history_table <- renderDT({
     hist <- history_data()
     
@@ -600,7 +412,6 @@ server <- function(input, output, session) {
     }
   }, server = FALSE)
   
-  # Limpiar historial (Recomendación 9)
   observeEvent(input$clear_history, {
     showModal(modalDialog(
       title = "Clear History",
@@ -627,7 +438,6 @@ server <- function(input, output, session) {
     showNotification("History cleared.", type = "message", duration = 3)
   })
   
-  # DOWNLOAD TXT
   output$downloadData <- downloadHandler(
     filename = function() {
       paste0("EBDT_result_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".txt")
