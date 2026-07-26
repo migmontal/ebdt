@@ -7,6 +7,7 @@ library(highcharter)
 library(shinyWidgets)
 library(DT)
 library(shinyalert)
+library(shinyjs)
 library(ebdt)
 
 HAS_READXL <- requireNamespace("readxl", quietly = TRUE)
@@ -28,7 +29,7 @@ METRICS_RETRO <- METRICS_ALL[c(
   "Negative Likelihood Ratio (NLR)", "Youden Index (You)"
 )]
 
-# Tema personalizado moderno con color rojo para lengüetas
+# Tema personalizado moderno
 custom_theme <- bs_theme(
   version = 5,
   preset = "flatly",
@@ -44,6 +45,9 @@ ui <- page_navbar(
   title = "Evaluating Binary Diagnostic Tests - EBDT",
   theme = custom_theme,
   window_title = "EBDT - Diagnostic Test Evaluation",
+  
+  # Inicializar shinyjs
+  useShinyjs(),
   
   # CSS personalizado para lengüetas en rojo
   tags$head(
@@ -150,7 +154,6 @@ ui <- page_navbar(
         
         br(),
         
-        # Sección sin card para evitar superposición del desplegable
         tags$div(
           style = "margin-bottom: 1rem;",
           tags$div(
@@ -184,7 +187,6 @@ ui <- page_navbar(
       ),
       
       navset_card_tab(
-        # Pestaña 1: Tabla de contingencia
         nav_panel(
           "Contingency Table",
           icon = bs_icon("grid-1x2"),
@@ -196,7 +198,6 @@ ui <- page_navbar(
           )
         ),
         
-        # Pestaña 2: Resultados
         nav_panel(
           "Results",
           icon = bs_icon("bar-chart"),
@@ -214,7 +215,6 @@ ui <- page_navbar(
           )
         ),
         
-        # Pestaña 3: Historial
         nav_panel(
           "History",
           icon = bs_icon("clock-history"),
@@ -355,18 +355,27 @@ server <- function(input, output, session) {
   })
   
   output$contingency_table_dt <- renderDT({
-    data <- matrix(
-      c(input$s1, input$r1, input$s0, input$r0),
-      nrow = 2,
-      byrow = TRUE,
-      dimnames = list(
-        c("Test Positive", "Test Negative"),
-        c("Disease Present", "Disease Absent")
-      )
+    # Calcular totales por fila
+    row_totals <- c(input$s1 + input$r1, input$s0 + input$r0)
+    
+    # Calcular totales por columna
+    col_totals <- c(input$s1 + input$s0, input$r1 + input$r0)
+    
+    # Total general
+    grand_total <- input$s1 + input$r1 + input$s0 + input$r0
+    
+    # Construir tabla con totales
+    final_data <- rbind(
+      c(input$s1, input$r1, row_totals[1]),
+      c(input$s0, input$r0, row_totals[2]),
+      c(col_totals[1], col_totals[2], grand_total)
     )
     
+    colnames(final_data) <- c("Disease +", "Disease -", "Total")
+    rownames(final_data) <- c("Test +", "Test -", "Total")
+    
     datatable(
-      data,
+      final_data,
       options = list(
         dom = 't',
         paging = FALSE,
@@ -379,7 +388,9 @@ server <- function(input, output, session) {
       ),
       rownames = TRUE
     ) %>%
-      formatStyle(columns = seq_len(ncol(data)), backgroundColor = "#E3F2FD", fontWeight = "bold")
+      formatStyle(columns = seq_len(ncol(final_data)), 
+                  backgroundColor = "#E3F2FD", 
+                  fontWeight = "bold")
   }, server = FALSE)
   
   observeEvent(input$run, {
@@ -403,6 +414,9 @@ server <- function(input, output, session) {
     }
     
     history_data(updated_history)
+    
+    # Activar la pestaña "Results" con shinyjs
+    shinyjs::runJs("$('.nav-tabs a:eq(1)').tab('show');")
   })
   
   output$history_table <- renderDT({
