@@ -7,7 +7,6 @@ library(highcharter)
 library(shinyWidgets)
 library(DT)
 library(shinyalert)
-library(shinyjs)
 library(ebdt)
 
 HAS_READXL <- requireNamespace("readxl", quietly = TRUE)
@@ -29,7 +28,7 @@ METRICS_RETRO <- METRICS_ALL[c(
   "Negative Likelihood Ratio (NLR)", "Youden Index (You)"
 )]
 
-# Tema personalizado moderno
+# Colors
 custom_theme <- bs_theme(
   version = 5,
   preset = "flatly",
@@ -45,11 +44,8 @@ ui <- page_navbar(
   title = "Evaluating Binary Diagnostic Tests - EBDT",
   theme = custom_theme,
   window_title = "EBDT - Diagnostic Test Evaluation",
-  
-  # Inicializar shinyjs
-  useShinyjs(),
-  
-  # CSS personalizado para lengüetas en rojo
+
+  # Custom CSS for red tabs
   tags$head(
     tags$style(HTML("
       .nav-tabs .nav-link.active {
@@ -65,50 +61,46 @@ ui <- page_navbar(
       }
     "))
   ),
-  
+
   nav_panel(
     "Info",
     icon = bs_icon("info-circle"),
-    
+
     card(
       full_screen = TRUE,
       card_header(strong(bs_icon("book"), " About EBDT")),
-      p(
-        "The ",
-        tags$code("ebdt"),
-        " Shiny app evaluates the quality of a binary diagnostic test under complete verification.
+      p("The ", tags$code("ebdt"), " Shiny app evaluates the quality of a binary diagnostic test under complete verification.
          It computes point estimates and confidence intervals for sensitivity, specificity, Youden index,
          positive and negative predictive values, positive and negative likelihood ratios, weighted kappa coefficient,
          and disease prevalence for both cross-sectional and retrospective study designs using the ",
-        tags$code("ebdt"),
-        " library."
+        tags$code("ebdt"), " library."
       )
     ),
-    
+
     br(),
-    
+
     layout_column_wrap(
       width = "100%",
       col_widths = c(6, 6),
-      
+
       card(
         card_header(strong(bs_icon("people"), " Authors")),
-        tags$p(tags$b("Miguel Ángel Montero-Alonso"), 
+        tags$p(tags$b("Miguel Ángel Montero-Alonso"),
                tags$a("ORCID", href = "https://orcid.org/0000-0002-1214-9035", target = "_blank")),
-        tags$p(tags$b("Juan de Dios Luna del Castillo"), 
+        tags$p(tags$b("Juan de Dios Luna del Castillo"),
                tags$a("ORCID", href = "https://orcid.org/0000-0002-1854-4968", target = "_blank")),
         tags$p(
-          tags$a("Department of Statistics and Operational Research", 
+          tags$a("Department of Statistics and Operational Research",
                  href = "https://estadistica.ugr.es", target = "_blank"),
           tags$br(),
-          tags$a("University of Granada", 
+          tags$a("University of Granada",
                  href = "https://www.ugr.es/", target = "_blank")
         )
       )
     ),
-    
+
     br(),
-    
+
     card(
       card_header(strong(bs_icon("bookmark"), " Key References")),
       tags$ul(
@@ -124,36 +116,36 @@ ui <- page_navbar(
       )
     )
   ),
-  
+
   nav_panel(
     "Calculate",
-    
+
     layout_sidebar(
       sidebar = sidebar(
         title = "Input Parameters",
         open = "desktop",
-        
+
         card(
           card_header(strong(bs_icon("table"), " Contingency Table Data")),
-          
+
           fileInput(
             "excel_file",
             "Upload Excel file (.xlsx)",
             accept = c(".xlsx", ".xls")
           ),
-          
+
           tags$small("Or enter data manually:", class = "d-block mb-3"),
-          
+
           numericInput("s1", "True Positive (TP):", value = 40),
           numericInput("r1", "False Positive (FP):", value = 5),
           numericInput("s0", "False Negative (FN):", value = 10),
           numericInput("r0", "True Negative (TN):", value = 45),
-          
+
           tags$div(id = "validation_message", style = "margin-top: 10px;")
         ),
-        
+
         br(),
-        
+
         tags$div(
           style = "margin-bottom: 1rem;",
           tags$div(
@@ -166,71 +158,74 @@ ui <- page_navbar(
             selectInput("target2", "Parameters to Calculate:", choices = c("All", names(METRICS_ALL)))
           )
         ),
-        
+
         br(),
-        
+
         card(
           card_header(strong(bs_icon("download"), " Export Options")),
-          
+
           checkboxInput("export_check", "Export results to TXT?", value = FALSE),
-          
+
           conditionalPanel(
             condition = "input.export_check == true",
             br(),
             downloadButton("downloadData", "Download result.txt", class = "btn-success w-100")
           )
         ),
-        
+
         br(),
-        
+
         actionButton("run", label = "Calculate", class = "btn-primary w-100", size = "lg")
       ),
-      
+
       navset_card_tab(
+        # Tab 1: Contingency Table
         nav_panel(
           "Contingency Table",
           icon = bs_icon("grid-1x2"),
-          
+
           card(
             full_screen = TRUE,
             card_header(strong("2x2 Contingency Table")),
             DTOutput("contingency_table_dt")
           )
         ),
-        
+
+        # Tab 2: Results
         nav_panel(
           "Results",
           icon = bs_icon("bar-chart"),
-          
+
           card(
             full_screen = TRUE,
             card_header(strong("Analysis Results")),
-            
+
             tags$div(
-              style = "background-color: #f8f9fa; padding: 15px; border-radius: 5px; 
-                       font-family: 'Courier New', monospace; font-size: 0.9em; 
+              style = "background-color: #f8f9fa; padding: 15px; border-radius: 5px;
+                       font-family: 'Courier New', monospace; font-size: 0.9em;
                        max-height: 600px; overflow-y: auto; line-height: 1.6;",
               verbatimTextOutput("consola")
             )
           )
         ),
-        
+
+        # Tab 3: History
         nav_panel(
           "History",
           icon = bs_icon("clock-history"),
-          
+
           card(
             full_screen = TRUE,
             card_header(strong("Calculation History")),
-            
+
             tags$div(
               id = "history_info",
               style = "padding: 20px; text-align: center; color: #6C757D;",
               p("Calculations will appear here. You can compare previous results.")
             ),
-            
+
             DTOutput("history_table"),
-            
+
             br(),
             actionButton("clear_history", "Clear History", class = "btn-warning btn-sm")
           )
@@ -241,7 +236,7 @@ ui <- page_navbar(
 )
 
 server <- function(input, output, session) {
-  
+
   history_data <- reactiveVal(data.frame(
     Timestamp = character(),
     StudyType = character(),
@@ -252,7 +247,7 @@ server <- function(input, output, session) {
     Parameters = character(),
     stringsAsFactors = FALSE
   ))
-  
+
   observeEvent(input$target1, {
     choices <- if (input$target1 == "Retrospective") {
       c("All", names(METRICS_RETRO))
@@ -261,15 +256,15 @@ server <- function(input, output, session) {
     }
     updateSelectInput(session, "target2", choices = choices)
   })
-  
+
   observe({
     s1 <- input$s1
     r1 <- input$r1
     s0 <- input$s0
     r0 <- input$r0
-    
+
     validation_html <- ""
-    
+
     if (is.na(s1) || is.na(r1) || is.na(s0) || is.na(r0)) {
       validation_html <- tags$div(
         class = "alert alert-warning",
@@ -286,7 +281,7 @@ server <- function(input, output, session) {
       total_diseased <- s1 + s0
       total_healthy <- r1 + r0
       total <- total_diseased + total_healthy
-      
+
       validation_html <- tags$div(
         class = "alert alert-info",
         icon("check-circle"),
@@ -294,12 +289,12 @@ server <- function(input, output, session) {
         sprintf("Total: %d | Diseased: %d | Healthy: %d", total, total_diseased, total_healthy)
       )
     }
-    
+
     output$validation_message <- renderUI({
       validation_html
     })
   })
-  
+
   read_2x2_from_file <- function(path) {
     ext <- tolower(tools::file_ext(path))
     if (ext %in% c("xlsx", "xls")) {
@@ -310,7 +305,7 @@ server <- function(input, output, session) {
     }
     nr <- nrow(raw); nc <- ncol(raw)
     if (nr < 2 || nc < 2) stop(sprintf("Need 2x2 table, found %d row(s) x %d col(s).", nr, nc))
-    
+
     cells <- as.numeric(raw[1, 1]); if (is.na(cells)) stop(sprintf("Cell [1,1] is not numeric: '%s'", raw[1, 1]))
     cells[2] <- as.numeric(raw[1, 2]); if (is.na(cells[2])) stop(sprintf("Cell [1,2] is not numeric: '%s'", raw[1, 2]))
     cells[3] <- as.numeric(raw[2, 1]); if (is.na(cells[3])) stop(sprintf("Cell [2,1] is not numeric: '%s'", raw[2, 1]))
@@ -319,7 +314,7 @@ server <- function(input, output, session) {
     if (any(vals < 0)) stop("All cell values must be non-negative.")
     list(s1 = vals[1], r1 = vals[2], s0 = vals[3], r0 = vals[4])
   }
-  
+
   observeEvent(input$excel_file, {
     req(input$excel_file)
     tryCatch({
@@ -333,11 +328,11 @@ server <- function(input, output, session) {
       showNotification(paste("Error:", e$message), type = "error", duration = 10)
     })
   })
-  
+
   resultados_calculados <- eventReactive(input$run, {
     a <- input$s1; b <- input$r1; c <- input$s0; d <- input$r0
     is_cross <- (input$target1 == "Cross-sectional")
-    
+
     txt <- capture.output({
       if (input$target2 == "All") {
         ebdt(s1 = a, r1 = b, s0 = c, r0 = d, study = is_cross)
@@ -346,34 +341,28 @@ server <- function(input, output, session) {
         do.call(func_name, list(s1 = a, r1 = b, s0 = c, r0 = d))
       }
     })
-    
+
     paste(txt, collapse = "\n")
   })
-  
+
   output$consola <- renderPrint({
     cat(resultados_calculados())
   })
-  
+
   output$contingency_table_dt <- renderDT({
-    # Calcular totales por fila
     row_totals <- c(input$s1 + input$r1, input$s0 + input$r0)
-    
-    # Calcular totales por columna
     col_totals <- c(input$s1 + input$s0, input$r1 + input$r0)
-    
-    # Total general
     grand_total <- input$s1 + input$r1 + input$s0 + input$r0
-    
-    # Construir tabla con totales
+
     final_data <- rbind(
       c(input$s1, input$r1, row_totals[1]),
       c(input$s0, input$r0, row_totals[2]),
       c(col_totals[1], col_totals[2], grand_total)
     )
-    
+
     colnames(final_data) <- c("Disease +", "Disease -", "Total")
     rownames(final_data) <- c("Test +", "Test -", "Total")
-    
+
     datatable(
       final_data,
       options = list(
@@ -388,14 +377,14 @@ server <- function(input, output, session) {
       ),
       rownames = TRUE
     ) %>%
-      formatStyle(columns = seq_len(ncol(final_data)), 
-                  backgroundColor = "#E3F2FD", 
+      formatStyle(columns = seq_len(ncol(final_data)),
+                  backgroundColor = "#E3F2FD",
                   fontWeight = "bold")
   }, server = FALSE)
-  
+
   observeEvent(input$run, {
     current_history <- history_data()
-    
+
     new_row <- data.frame(
       Timestamp = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
       StudyType = input$target1,
@@ -406,22 +395,19 @@ server <- function(input, output, session) {
       Parameters = input$target2,
       stringsAsFactors = FALSE
     )
-    
+
     updated_history <- rbind(new_row, current_history)
-    
+
     if (nrow(updated_history) > 50) {
       updated_history <- updated_history[1:50, ]
     }
-    
+
     history_data(updated_history)
-    
-    # Activar la pestaña "Results" con shinyjs
-    shinyjs::runJs("$('.nav-tabs a:eq(1)').tab('show');")
   })
-  
+
   output$history_table <- renderDT({
     hist <- history_data()
-    
+
     if (nrow(hist) == 0) {
       datatable(
         data.frame("No calculations yet" = ""),
@@ -443,7 +429,7 @@ server <- function(input, output, session) {
         formatStyle(columns = seq_len(ncol(hist)), fontSize = "90%")
     }
   }, server = FALSE)
-  
+
   observeEvent(input$clear_history, {
     showModal(modalDialog(
       title = "Clear History",
@@ -454,7 +440,7 @@ server <- function(input, output, session) {
       )
     ))
   })
-  
+
   observeEvent(input$confirm_clear, {
     history_data(data.frame(
       Timestamp = character(),
@@ -469,7 +455,7 @@ server <- function(input, output, session) {
     removeModal()
     showNotification("History cleared.", type = "message", duration = 3)
   })
-  
+
   output$downloadData <- downloadHandler(
     filename = function() {
       paste0("EBDT_result_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".txt")
@@ -489,3 +475,4 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+
