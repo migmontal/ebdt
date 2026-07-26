@@ -28,14 +28,12 @@ This package is particularly useful for:
 --- 
 ## Authors
 
-- **Miguel Ángel Montero-Alonso**
- [*ORCID*]: 0000-0002-1214-9035
+- **Miguel Ángel Montero-Alonso** [!ORCID](0000-0002-1214-9035)
   Department of Statistics and Operations Research, Faculty of Medicine, University of Granada, Granada, Spain  
   Instituto de Investigación Biosanitaria ibs.GRANADA, Granada, Spain  
   Email: mmontero@ugr.es
 
-  - **Juan de Dios Luna del Castillo**
-  [*ORCID*]: 0000-0002-1854-4968
+- **Juan de Dios Luna del Castillo** [!ORCID](0000-0002-1854-4968)
   Department of Statistics and Operations Research, Faculty of Medicine, University of Granada, Granada, Spain  
   Instituto de Investigación Biosanitaria ibs.GRANADA, Granada, Spain  
   Email: jdluna@ugr.es
@@ -95,10 +93,19 @@ Montero-Alonso M.A., Luna del Castillo J.D. (2026). ebdt: Evaluation of the qual
 
 ## Shiny app
 
+The package includes an interactive Shiny application:
+
+```r
+shiny::runApp(system.file("app", package = "ebdt"))
+
+and you can also find it at:
+
+```r
+https://migmontal.shinyapps.io/ebdt/
 
 ---
 
-## Finding
+## Funding
 
 Plan Propio de Investigación y Transferencia de la Universidad de Granada. 2024. Programa 21. Programa de estimulación a la investigación.
 
