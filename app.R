@@ -28,7 +28,7 @@ METRICS_RETRO <- METRICS_ALL[c(
   "Negative Likelihood Ratio (NLR)", "Youden Index (You)"
 )]
 
-# Tema personalizado moderno
+# Tema personalizado moderno con color rojo para lengüetas
 custom_theme <- bs_theme(
   version = 5,
   preset = "flatly",
@@ -44,6 +44,23 @@ ui <- page_navbar(
   title = "Evaluating Binary Diagnostic Tests - EBDT",
   theme = custom_theme,
   window_title = "EBDT - Diagnostic Test Evaluation",
+  
+  # CSS personalizado para lengüetas en rojo
+  tags$head(
+    tags$style(HTML("
+      .nav-tabs .nav-link.active {
+        background-color: #DC3545 !important;
+        border-color: #DC3545 !important;
+        color: white !important;
+      }
+      .nav-tabs .nav-link {
+        color: #333 !important;
+      }
+      .nav-tabs .nav-link:hover {
+        border-color: #DC3545 !important;
+      }
+    "))
+  ),
   
   nav_panel(
     "Info",
@@ -83,12 +100,6 @@ ui <- page_navbar(
           tags$a("University of Granada", 
                  href = "https://www.ugr.es/", target = "_blank")
         )
-      ),
-      
-      card(
-        card_header(strong(bs_icon("code-square"), " Technical Info")),
-        tags$p(tags$b("Built with: "), "R, Shiny, bslib"),
-        tags$p(tags$b("Last updated: "), "2024")
       )
     ),
     
@@ -139,11 +150,18 @@ ui <- page_navbar(
         
         br(),
         
-        card(
-          card_header(strong(bs_icon("gear"), " Analysis Options")),
-          
-          selectInput("target1", "Study Type:", choices = c("Cross-sectional", "Retrospective")),
-          selectInput("target2", "Parameters to Calculate:", choices = c("All", names(METRICS_ALL)))
+        # Sección sin card para evitar superposición del desplegable
+        tags$div(
+          style = "margin-bottom: 1rem;",
+          tags$div(
+            style = "background-color: #f8f9fa; padding: 1rem; border-radius: 0.375rem; border: 1px solid #dee2e6;",
+            tags$div(
+              style = "background-color: #0DCAF0; color: white; padding: 0.5rem 0.75rem; border-radius: 0.25rem 0.25rem 0 0; margin: -1rem -1rem 1rem -1rem; font-weight: bold;",
+              bs_icon("gear"), " Analysis Options"
+            ),
+            selectInput("target1", "Study Type:", choices = c("Cross-sectional", "Retrospective")),
+            selectInput("target2", "Parameters to Calculate:", choices = c("All", names(METRICS_ALL)))
+          )
         ),
         
         br(),
@@ -166,8 +184,7 @@ ui <- page_navbar(
       ),
       
       navset_card_tab(
-        title = "Results",
-        
+        # Pestaña 1: Tabla de contingencia
         nav_panel(
           "Contingency Table",
           icon = bs_icon("grid-1x2"),
@@ -179,6 +196,7 @@ ui <- page_navbar(
           )
         ),
         
+        # Pestaña 2: Resultados
         nav_panel(
           "Results",
           icon = bs_icon("bar-chart"),
@@ -196,6 +214,7 @@ ui <- page_navbar(
           )
         ),
         
+        # Pestaña 3: Historial
         nav_panel(
           "History",
           icon = bs_icon("clock-history"),
@@ -360,8 +379,7 @@ server <- function(input, output, session) {
       ),
       rownames = TRUE
     ) %>%
-      formatStyle(columns = 0:2, backgroundColor = "#E3F2FD", fontWeight = "bold") %>%
-      formatStyle(rows = 1, backgroundColor = "#FFF9C4")
+      formatStyle(columns = seq_len(ncol(data)), backgroundColor = "#E3F2FD", fontWeight = "bold")
   }, server = FALSE)
   
   observeEvent(input$run, {
@@ -408,7 +426,7 @@ server <- function(input, output, session) {
         ),
         rownames = FALSE
       ) %>%
-        formatStyle(columns = 0:(ncol(hist)-1), fontSize = "90%")
+        formatStyle(columns = seq_len(ncol(hist)), fontSize = "90%")
     }
   }, server = FALSE)
   
