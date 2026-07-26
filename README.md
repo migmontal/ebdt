@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 ## Overview
-<p align="center">
+<p align="justify">
 The `ebdt` package evaluates the quality of a binary diagnostic test under complete verification. It computes point estimates and confidence intervals for sensitivity, specificity, Youden index, positive and negative predictive values, positive and negative likelihood ratios, weighted kappa coefficient, and disease prevalence, for both, cross-sectional (prospective) and retrospective study designs. </p>
 
 This package is particularly useful for:
@@ -28,19 +28,21 @@ This package is particularly useful for:
 - Zhou, X.-H., Obuchowski, N. A., y McClish, D. K. (2011). Statistical Methods in Diagnostic Medicine (2.ª ed.). John Wiley & Sons.
 
 --- 
+
 ## Authors
 
-- **Miguel Ángel Montero-Alonso** [ORCID](0000-0002-1214-9035)
-  Department of Statistics and Operations Research, Faculty of Medicine, University of Granada, Granada, Spain  
+- **Miguel Ángel Montero-Alonso** <a href="https://orcid.org/0000-0002-1214-9035" target="_blank" rel="noopener">ORCID</a>
+  <p>Department of Statistics and Operations Research, Faculty of Medicine, University of Granada, Granada, Spain  
   Instituto de Investigación Biosanitaria ibs.GRANADA, Granada, Spain  
-  Email: mmontero@ugr.es
+  Email: mmontero@ugr.es</p>
 
-- **Juan de Dios Luna del Castillo** [ORCID](0000-0002-1854-4968)
+- **Juan de Dios Luna del Castillo** <a href="https://orcid.org/0000-0002-1854-4968" target="_blank" rel="noopener">ORCID</a>
   <p>Department of Statistics and Operations Research, Faculty of Medicine, University of Granada, Granada, Spain  
   Instituto de Investigación Biosanitaria ibs.GRANADA, Granada, Spain  
   Email: jdluna@ugr.es</p>
 
 ---
+
 ## Installation
 
 ### From GitHub (development version)
@@ -66,11 +68,15 @@ ebdt(231,32,27,55)
 
 ```
 
+---
+
 ## Documentation
 
 - **Website**: [https://migmontal.github.io/ebdt](https://migmontal.github.io/ebdt)
 - **Vignettes**: `vignette("ebdt-introduction")`
 - **Issues**: [GitHub Issues](https://github.com/migmontal/ebdt/issues)
+
+---
 
 ## Citation
 
@@ -110,6 +116,8 @@ https://migmontal.shinyapps.io/ebdt/
 ## Funding
 
 Plan Propio de Investigación y Transferencia de la Universidad de Granada. 2024. Programa 21. Programa de estimulación a la investigación.
+
+---
 
 ## License
 
