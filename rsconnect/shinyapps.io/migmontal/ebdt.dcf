@@ -1,0 +1,10 @@
+name: ebdt
+title:
+username: migmontal
+account: migmontal
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17642633
+bundleId: 12325470
+url: https://migmontal.shinyapps.io/ebdt/
+version: 1
