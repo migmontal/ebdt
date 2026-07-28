@@ -5,9 +5,6 @@ Version: 1.0.0
 Authors@R: c(
     person("Miguel Angel", "Montero-Alonso", , "mmontero@ugr.es", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1214-9035")),
     person("Juan de Dios", "Luna del Castillo", , "jdluna@ugr.es", role = c("aut"), comment = c(ORCID = "0000-0002-1854-4968")))
-Author: Miguel Angel Montero-Alonso [aut, cre]
-    Juan de Dios Luna del Castillo [aut]
-Maintainer: Miguel Angel Montero-Alonso <mmontero@ugr.es>
 Description: This function calculate Sensitivity, Specificity, positive and negative predictive
     value, positive and negative Likelihood Ratio, Weighted Kappa coeficient,
     Youden Index, prevalence and their Confidence intervals in a traverse or
