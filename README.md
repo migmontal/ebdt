@@ -105,6 +105,13 @@ https://migmontal.shinyapps.io/ebdt/
 
 ---
 
+## Vignettes
+Find summarized information at the following link:
+
+[https://migmontal.github.io/ebdt-webside/](https://migmontal.github.io/ebdt-website/)
+
+---
+
 ## Funding
 
 Plan Propio de Investigación y Transferencia de la Universidad de Granada. 2024. Programa 21. Programa de estimulación a la investigación.
