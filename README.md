@@ -74,14 +74,14 @@ ebdt(231,32,27,55)
 
 If you use `ebdt` in your research, please cite it as:
 
-Montero-Alonso M.A., Luna del Castillo J.D. (2026). ebdt: Evaluation of the quality of binary diagnostic test parameters. R package version 1.0.0.
+Montero-Alonso M.A., Luna del Castillo J.D. (2026). ebdt: Evaluation of the quality of binary diagnostic test parameters. R package version 1.0.1.
 
 ```bibtex
 @Manual{ebdt2026,
   title = {ebdt: Evaluation of the quality of binary diagnostic test parameters},
   author = {Miguel Angel Montero-Alonso and Juan de Dios Luna del Castillo},
   year = {2026},
-  note = {R package version 1.0.0},
+  note = {R package version 1.0.1},
 }
 ```
 
