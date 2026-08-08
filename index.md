@@ -1,5 +1,8 @@
 # ebdt: Evaluation of Binary Diagnostic Test
 
+![R
+Shiny](https://img.shields.io/badge/Shiny-1.9.1-blue?logo=r)![License](https://img.shields.io/badge/license-MIT-green)
+
 An R package for calculating quality measures of binary diagnostic tests
 with confidence intervals.
 
@@ -52,11 +55,32 @@ See the [online documentation](https://github.com/migmontal/ebdt) for: -
 Function reference - Usage examples - Methodological details and
 references
 
+## Website
+
+This repository hosts the website created for the ebdt library. You can
+view it at the following link:
+
+[https://migmontal.github.io/ebdt-webside/](https://migmontal.github.io/ebdt-website/)
+
+## Shiny app
+
+Run the app and perform your calculations:
+
+<https://migmontal.shinyapps.io/ebdt/>
+
 ## Authors
 
 - **Miguel Angel Montero-Alonso** (ORCID: 0000-0002-1214-9035)
 - **Juan de Dios Luna del Castillo** (ORCID: 0000-0002-1854-4968)
 
+## Fundings
+
+Plan Propio de Investigación y Transferencia de la Universidad de
+Granada. 2024. Programa 21. Programa de estimulación a la investigación.
+
+------------------------------------------------------------------------
+
 ## License
 
-MIT + file LICENSE
+MIT License - see [LICENSE](https://migmontal.github.io/ebdt/LICENSE)
+file for details. Copyright (c) 2026 Universidad de Granada.

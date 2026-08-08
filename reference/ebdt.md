@@ -221,5 +221,5 @@ ebdt(40, 5, 10, 45, conflev = 0.95, digits = 4)
 #> 8     0.8 0.6604   0.0474    0.5676    0.7532     0.5625     0.7463 Logit
 #> 9     0.9 0.6481   0.0478    0.5546    0.7417     0.5500     0.7352 Logit
 #> 
-#> Execution time: 0.1406 seconds
+#> Execution time: 0.1492 seconds
 ```
