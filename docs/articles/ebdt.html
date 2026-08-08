@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="ebdt package vignette">
+<title>Evaluating Binary Diagnostic Tests with EBDT</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 2em; line-height: 1.6; color: #333; }
+h1 { color: #003DA5; border-bottom: 4px solid #0056B3; padding-bottom: .5em; }
+h2 { color: #003DA5; margin-top: 2em; border-left: 4px solid #0056B3; padding-left: 1rem; }
+h3 { color: #6C757D; }
+a { color: #0056B3; text-decoration: none; }
+a:hover { color: #003DA5; text-decoration: underline; }
+pre { background: #F8F9FA; border: 1px solid #DEE2E6; border-left: 4px solid #0056B3; border-radius: 4px; padding: 1em; overflow-x: auto; font-size: .9em; }
+code { background: #F8F9FA; color: #003DA5; padding: .1em .3em; border-radius: 3px; font-size: .9em; font-weight: 500; }
+pre code { background: none; color: #333; padding: 0; font-weight: normal; }
+table { border-collapse: collapse; margin: 1em 0; border: 1px solid #DEE2E6; }
+th, td { border: 1px solid #DEE2E6; padding: .5em .8em; text-align: left; }
+th { background: #F8F9FA; color: #003DA5; font-weight: 600; }
+tr:hover { background: #F8F9FA; }
+.note { background: #E7F0FF; border-left: 4px solid #0056B3; padding: .8em 1em; margin: 1em 0; color: #003DA5; }
+</style>
+</head>
+<body>
+
+<h1>Evaluating Binary Diagnostic Tests with EBDT</h1>
+<p><strong>Authors:</strong> <a href="https://orcid.org/0000-0002-1214-9035" target="_blank" rel="noopener">Miguel Angel Montero-Alonso</a> &amp; <a href="https://orcid.org/0000-0002-1854-4968" target="_blank" rel="noopener">Juan de Dios Luna del Castillo</a>.<br>
+<strong>Package:</strong> ebdt v1.0.0</p>
+
+<h2>Introduction</h2>
+<p>The <code>ebdt</code> package evaluates the quality of a binary diagnostic test under complete verification. It computes point estimates and confidence intervals for sensitivity, specificity, Youden index, positive and negative predictive values, positive and negative likelihood ratios, weighted kappa coefficient, and disease prevalence, for both, cross-sectional (prospective) and retrospective study designs.</p>
+
+<p><strong>Reference:</strong> </p>
+	
+
+	
+<li>Agresti, A., (2002). Categorical Data Analysis. John Wiley and Sons, New York.</li>
+<li>Agresti, A., Coull, B.A., (1998). Approximate is better than ‘exact’ for interval estimation of binomial proportions. The American Statistician, 52:119 – 126.</li>
+<li>Gart, J.J., Nam J., (1988). Aproximate interval estimation of the ratio of binomial parameters: a review and corrections for skewness. Biometrics, 44: 323 – 338.</li>
+	<li>Montero-Alonso, M.A. (2010). <em>Intervalos de confianza y contrastes de hipotesis para parametros de tests diagnosticos binarios.</em> Universidad de Granada. <a href="http://hdl.handle.net/10481/4879">http://hdl.handle.net/10481/4879</a></li>
+<li>Simel D.L., Samsa, G.P., Matchar, D.B., (1991). Likelihood ratios with confidence: sample size estimation for diagnostic test studies. J. Clin Epidemiology, 44(8): 763-770.</li>
+<li>Roldán Nofuentes J.A., Luna del Castillo J.D., Montero Alonso, M.A., (2009). Confidence intervals of weighted kappa coefficient of a binary diagnostic test. Communications in Statistics. Simulation and Computation, 38: 1562 – 1578.</li>
+<li>Pepe, M. S. (2003). The statistical evaluation of medical tests for classification and prediction. Oxford University Press.</li>
+<li>Zhou, X.-H., Obuchowski, N. A., y McClish, D. K. (2011). Statistical Methods in Diagnostic Medicine (2.ª ed.). John Wiley & Sons.</li>
+
+<h2>Quick Start</h2>
+<pre><code>library(ebdt)
+ebdt(s1 = 40, r1 = 5, s0 = 10, r0 = 45)</code></pre>
+
+<h2>The 2x2 Table</h2>
+<p>A binary diagnostic test produces a 2x2 contingency table:</p>
+<table>
+<tr><th></th><th>Outcome +</th><th>Outcome -</th><th>Total</th></tr>
+	<tr><th>Test +</th><td>TP (s<sub>1</sub>)</td><td>FP (r<sub>1</sub>)</td><td>n<sub>1</sub></td></tr>
+<tr><th>Test -</th><td>FN (s<sub>0</sub>)</td><td>TN (r<sub>0</sub>)</td><td>n<sub>2</sub></td></tr>
+<tr><th>Total</th><td>n<sub>Cases</sub></td><td>n<sub>Controls</sub></td><td>n</td></tr>
+</table>
+<ul>
+<li><strong>TP (s1):</strong> True positives — diseased correctly classified as positive</li>
+<li><strong>FP (r1):</strong> False positives — non-diseased incorrectly classified as positive</li>
+<li><strong>FN (s0):</strong> False negatives — diseased incorrectly classified as negative</li>
+<li><strong>TN (r0):</strong> True negatives — non-diseased correctly classified as negative</li>
+</ul>
+
+<h2>Study Types</h2>
+
+<h3>Cross-sectional / Prospective (<code>study = TRUE</code>)</h3>
+<p>All quality parameters are estimable:</p>
+<pre><code>ebdt(40, 5, 10, 45, study = TRUE, conflev = 0.95)</code></pre>
+<p><strong>Computed:</strong> Sensitivity, Specificity, Youden Index, Prevalence, PPV, NPV, PLR, NLR, Weighted Kappa.</p>
+
+<h3>Retrospective / Case-Control (<code>study = FALSE</code>)</h3>
+<p>Only Se, Sp, Youden, PLR, and NLR are estimable (prevalence, PPV, NPV not defined under retrospective sampling):</p>
+<pre><code>ebdt(40, 5, 10, 45, study = FALSE, conflev = 0.95)</code></pre>
+
+<h2>Individual Metrics</h2>
+
+<h3>Sensitivity</h3>
+<pre><code>ebdt_se(40, 5, 10, 45)</code></pre>
+
+<h3>Specificity</h3>
+<pre><code>ebdt_sp(40, 5, 10, 45)</code></pre>
+
+<h3>Youden Index</h3>
+<pre><code>ebdt_you(40, 5, 10, 45)</code></pre>
+
+<h3>Positive Predictive Value (PPV)</h3>
+<pre><code>ebdt_ppv(40, 5, 10, 45)</code></pre>
+
+<h3>Negative Predictive Value (NPV)</h3>
+<pre><code>ebdt_npv(40, 5, 10, 45)</code></pre>
+
+<h3>Positive Likelihood Ratio (LR+)</h3>
+<pre><code>ebdt_plr(40, 5, 10, 45)</code></pre>
+<p>Two confidence intervals are provided: <strong>Simel</strong> (log-normal, delta method on log LR+) and <strong>Gart &amp; Nam</strong> (exact, inverting the score statistic). The narrower interval is recommended.</p>
+
+<h3>Negative Likelihood Ratio (LR-)</h3>
+<pre><code>ebdt_nlr(40, 5, 10, 45)</code></pre>
+
+<h3>Prevalence (cross-sectional only)</h3>
+<pre><code>ebdt_prev(40, 5, 10, 45)</code></pre>
+
+<h3>Weighted Kappa Coefficient</h3>
+<pre><code>ebdt_kap(40, 5, 10, 45)</code></pre>
+<p>Kappa is computed for c = 0.1, 0.2, ..., 0.9. Both Wald and Logit-transformed confidence intervals are provided.</p>
+
+<h2>Confidence Interval Methods</h2>
+<table>
+<tr><th>Parameter</th><th>Method</th></tr>
+<tr><td>Se, Sp, PPV, NPV</td><td>Agresti-Coull</td></tr>
+<tr><td>Prevalence<</td><td>Agresti-Coull</td></tr>
+<tr><td>Youden Index</td><td>Normal approx. (delta method)</td></tr>
+<tr><td>LR+, LR-</td><td>Simel (log-normal) + Gart &amp; Nam</td></tr>
+<tr><td>Weighted Kappa</td><td>Wald + Logit</td></tr>
+</table>
+
+<h2>Zero-Cell Correction</h2>
+<p>When any cell of a related pair contains a zero, the Haldane-Anscombe continuity correction (+0.5) is applied to <strong>both</strong> cells of that pair:</p>
+<ul>
+<li>If s1 == 0 or s0 == 0: add 0.5 to both s1 and s0</li>
+<li>If r1 == 0 or r0 == 0: add 0.5 to both r1 and r0</li>
+</ul>
+<p>A warning is issued when the correction is applied.</p>
+<pre><code>ebdt(0, 5, 10, 45, quiet = TRUE)</code></pre>
+
+<h2>Reading from Excel</h2>
+<pre><code>ebdt_from_excel("test_ebdt.xlsx")
+ebdt_from_excel("test_ebdt.xlsx", study = FALSE, conflev = 0.99)</code></pre>
+<p>The Excel file must contain a 2x2 numeric matrix in the top-left corner:</p>
+<pre><code># Row 1: TP  FP
+# Row 2: FN  TN</code></pre>
+
+<div class="note">
+<strong>Note:</strong> The <code>readxl</code> package must be installed to use <code>ebdt_from_excel()</code>.
+Install it with <code>install.packages("readxl")</code>.
+</div>
+
+<h2>Return Values (Programmatic Use)</h2>
+<p>All functions return structured lists in addition to printing to the console:</p>
+<pre><code>res &lt;- ebdt_se(40, 5, 10, 45)
+res$est        # point estimate
+res$ci_lower   # lower CI bound
+res$ci_upper   # upper CI bound
+res$ci_method  # "Wilson" or "Agresti-Coull"
+
+res_plr &lt;- ebdt_plr(40, 5, 10, 45)
+res_plr$gartnam_ci_lower
+res_plr$gartnam_ci_upper
+
+res_kap &lt;- ebdt_kap(40, 5, 10, 45)
+head(res_kap, 3)</code></pre>
+
+<h2>Function Return Elements</h2>
+<table>
+<tr><th>Function</th><th>Return elements</th></tr>
+<tr><td>ebdt_se()</td><td>est, se, ci_lower, ci_upper, ci_method, conf_level</td></tr>
+<tr><td>ebdt_sp()</td><td>est, se, ci_lower, ci_upper, ci_method, conf_level</td></tr>
+<tr><td>ebdt_you()</td><td>est, se, ci_lower, ci_upper, ci_method, conf_level, youden_note</td></tr>
+<tr><td>ebdt_ppv()</td><td>est, se, ci_lower, ci_upper, ci_method, conf_level</td></tr>
+<tr><td>ebdt_npv()</td><td>est, se, ci_lower, ci_upper, ci_method, conf_level</td></tr>
+<tr><td>ebdt_plr()</td><td>est, se, simel_ci_*, gartnam_ci_*, conf_level</td></tr>
+<tr><td>ebdt_nlr()</td><td>est, se, simel_ci_*, gartnam_ci_*, conf_level</td></tr>
+<tr><td>ebdt_prev()</td><td>est, se, ci_lower, ci_upper, ci_method, conf_level</td></tr>
+<tr><td>ebdt_kap()</td><td>data.frame: c_index, Kappa, StdError, CI_Wald_*, CI_Logit_*, Best</td></tr>
+<tr><td>ebdt()</td><td>Named list of all applicable results + Execution_Time</td></tr>
+</table>
+
+<h2>Shiny App</h2>
+<p>The package includes an interactive Shiny application:</p>
+<pre><code>shiny::runApp(system.file("app", package = "ebdt"))</code></pre>
+<p>and you can also find it at:</p>
+<pre><code>https://migmontal.shinyapps.io/ebdt/</code></pre>
+<p>Features: manual entry of TP/FP/FN/TN counts, Excel (.xlsx) upload with 2x2 table auto-population, study type selection, individual metric or all-metric mode, and text file export.</p>
+	
+<h2>GitHub</h2>
+<p>
+  All content and source code on this site is available in our
+  <a href="https://github.com/migmontal/ebdt" target="_blank" rel="noopener">
+    GitHub repository</a>.
+</p>
+
+
+<br><hr>
+<p><em>Package ebdt v1.0.0 — Universidad de Granada</em></p>
+</body>
+</html>

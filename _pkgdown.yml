@@ -1,0 +1,19 @@
+url: https://migmontal.github.io/ebdt
+template:
+  bootstrap: 5
+  assets:
+    css:
+      - pkgdown.css
+navbar:
+  title: ebdt
+  structure:
+    left: [home, reference, articles, github]
+    right: []
+  components:
+    articles:
+      text: Articles
+      href: articles/
+      menu:
+        - text: "Vignette"
+          href: articles/ebdt.html
+

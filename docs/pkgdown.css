@@ -1,0 +1,185 @@
+/* Custom styling for ebdt package documentation */
+
+:root {
+  --bs-primary: #0056B3;
+  --bs-secondary: #6C757D;
+  --bs-light: #F8F9FA;
+  --bs-gray-100: #E9ECEF;
+  --bs-gray-200: #DEE2E6;
+  --bs-gray-600: #6C757D;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #003DA5 !important;
+  box-shadow: 0 2px 4px rgba(0, 61, 165, 0.1);
+}
+
+.navbar-brand {
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.navbar-brand:hover {
+  color: #E9ECEF !important;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Sidebar and Cards */
+.sidebar {
+  background-color: #F8F9FA;
+  border-left: 4px solid #0056B3;
+}
+
+.card {
+  border-color: #DEE2E6;
+  border-left: 4px solid #0056B3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  background-color: #F8F9FA;
+  border-bottom-color: #DEE2E6;
+}
+
+/* Links */
+a {
+  color: #0056B3;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #003DA5;
+  text-decoration: underline;
+}
+
+/* Code blocks and inline code */
+code {
+  background-color: #F8F9FA;
+  color: #003DA5;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+pre {
+  background-color: #F8F9FA;
+  border-left: 4px solid #0056B3;
+  padding: 1rem;
+}
+
+pre code {
+  color: #333;
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #0056B3;
+  border-color: #0056B3;
+}
+
+.btn-primary:hover {
+  background-color: #003DA5;
+  border-color: #003DA5;
+}
+
+.btn-secondary {
+  background-color: #6C757D;
+  border-color: #6C757D;
+}
+
+.btn-secondary:hover {
+  background-color: #5A6268;
+  border-color: #5A6268;
+}
+
+/* Badge */
+.badge {
+  background-color: #0056B3;
+}
+
+.badge-secondary {
+  background-color: #6C757D;
+}
+
+/* Table styling */
+table {
+  border-color: #DEE2E6;
+}
+
+thead {
+  background-color: #F8F9FA;
+  border-bottom: 2px solid #0056B3;
+}
+
+tbody tr:hover {
+  background-color: #F8F9FA;
+}
+
+/* Highlight and emphasis */
+.highlight {
+  background-color: #FFF3CD;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+
+mark {
+  background-color: #FFF3CD;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background-color: #F8F9FA;
+  border-radius: 0;
+}
+
+.breadcrumb-item.active {
+  color: #6C757D;
+}
+
+/* Footer */
+footer {
+  background-color: #F8F9FA;
+  border-top: 1px solid #DEE2E6;
+  color: #6C757D;
+}
+
+/* Section headers */
+h1, h2, h3, h4, h5, h6 {
+  color: #003DA5;
+  border-left: 4px solid #0056B3;
+  padding-left: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  border-left: none;
+  padding-left: 0;
+}
+
+/* Main content area */
+main {
+  background-color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h2, h3, h4, h5, h6 {
+    padding-left: 0.75rem;
+  }
+}
