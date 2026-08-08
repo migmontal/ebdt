@@ -16,7 +16,7 @@ Description: ebdt calculate Sensitivity, Specificity, positive and negative pred
 License: MIT + file LICENSE
 Encoding: UTF-8
 Config/roxygen2/version: 8.0.0
-URL: https://github.com/migmontal/ebdt
+URL: https://github.com/migmontal/ebdt, https://migmontal.github.io/ebdt/
 Imports: 
     stats
 Suggests: 
