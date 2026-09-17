@@ -3,6 +3,7 @@
 <!-- badges: start -->
 ![R Shiny](https://img.shields.io/badge/Shiny-1.9.1-blue?logo=r)
 ![License](https://img.shields.io/badge/license-MIT-green)
+[![DOI](https://img.shields.io/badge/DOI-10.32614%2FCRAN.package.ebdt-blue.svg)](https://doi.org/10.32614/CRAN.package.ebdt)
 <!-- badges: end -->
 
 An R package for calculating quality measures of binary diagnostic tests with confidence intervals.
