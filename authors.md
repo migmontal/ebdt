@@ -2,11 +2,11 @@
 
 ## Authors
 
-- **Miguel Ángel Montero-Alonso**. Author, maintainer.
-  [](https://orcid.org/0000-0002-1214-9035)
+- **Miguel Angel Montero-Alonso**. Author, maintainer.
+  [](https://orcid.org/%3C0000-0002-1214-9035%3E)
 
 - **Juan de Dios Luna del Castillo**. Author.
-  [](https://orcid.org/0000-0002-1854-4968)
+  [](https://orcid.org/%3C0000-0002-1854-4968%3E)
 
 ## Citation
 
@@ -19,7 +19,7 @@ Binary Diagnostic Test*. R package version 1.0.1,
 
     @Manual{,
       title = {ebdt: Evaluation of Binary Diagnostic Test},
-      author = {Miguel Ángel Montero-Alonso and Juan de Dios {Luna del Castillo}},
+      author = {Miguel Angel Montero-Alonso and Juan de Dios {Luna del Castillo}},
       year = {2026},
       note = {R package version 1.0.1},
       url = {https://github.com/migmontal/ebdt},

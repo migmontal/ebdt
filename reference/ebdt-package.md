@@ -1,12 +1,12 @@
 # ebdt: Evaluation of Binary Diagnostic Test
 
-Calculate the point estimator and its confidence interval for the
-quality parameters of a binary diagnostic test, such as sensitivity,
-specificity, positive and negative predictive value, positive and
-negative likelihood ratio, weighted Kappa coefficient, a global
-diagnostic accuracy index, prevalence in a cross-sectional study, and
-sensitivity, specificity, positive and negative likelihood ratio, and a
-global diagnostic accuracy index in a retrospective study.
+ebdt calculate Sensitivity, Specificity, positive and negative
+predictive value, positive and negative Likelihood Ratio, Weighted Kappa
+coefficient, a global diagnostic accuracy index, prevalence and their
+Confidence intervals in a traverse or Cross-sectional study, and
+Sensitivity, Specificity, positive and negative Likelihood Ratio and a
+global diagnostic accuracy index in a Case Control or Retrospective
+study.
 
 ## See also
 
@@ -14,17 +14,15 @@ Useful links:
 
 - <https://github.com/migmontal/ebdt>
 
-- <https://migmontal.github.io/ebdt/>
-
 ## Author
 
-**Maintainer**: Miguel Ángel Montero-Alonso <mmontero@ugr.es>
-([ORCID](https://orcid.org/0000-0002-1214-9035))
+**Maintainer**: Miguel Angel Montero-Alonso <mmontero@ugr.es>
+([ORCID](https://orcid.org/%3C0000-0002-1214-9035%3E))
 
 Authors:
 
-- Miguel Ángel Montero-Alonso <mmontero@ugr.es>
-  ([ORCID](https://orcid.org/0000-0002-1214-9035))
+- Miguel Angel Montero-Alonso <mmontero@ugr.es>
+  ([ORCID](https://orcid.org/%3C0000-0002-1214-9035%3E))
 
 - Juan de Dios Luna del Castillo <jdluna@ugr.es>
-  ([ORCID](https://orcid.org/0000-0002-1854-4968))
+  ([ORCID](https://orcid.org/%3C0000-0002-1854-4968%3E))
