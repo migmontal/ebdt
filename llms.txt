@@ -1,8 +1,5 @@
 # ebdt: Evaluation of Binary Diagnostic Test
 
-![R
-Shiny](https://img.shields.io/badge/Shiny-1.9.1-blue?logo=r)![License](https://img.shields.io/badge/license-MIT-green)
-
 An R package for calculating quality measures of binary diagnostic tests
 with confidence intervals.
 
