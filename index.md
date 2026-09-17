@@ -71,3 +71,13 @@ Run the app and perform your calculations:
 - **Juan de Dios Luna del Castillo** (ORCID: 0000-0002-1854-4968)
 
 ## Fundings
+
+This work is supported by: - **Plan Propio de Investigación y
+Transferencia de la Universidad de Granada** (2024) - **Programa 21** -
+Programa de estimulación a la investigación
+
+## License
+
+MIT License - see [LICENSE](https://migmontal.github.io/ebdt/LICENSE)
+file for details.  
+Copyright (c) 2026 Universidad de Granada.
